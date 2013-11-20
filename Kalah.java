@@ -1,19 +1,36 @@
+/**
+A class for a single game of Kalah
+*/
 public class Kalah {
     private Player p1, p2;
     private int[] p1houses, p2houses;
     private int p1store, p2store;
     private boolean p1sTurn;
 
+    /**
+    Constructor to set up the initial game board with 4 seeds in each house and creates the AI players
+    @param p1starts TRUE if player 1 is to have to first move, FALSE if player 2 is to have the first move
+    */
     public Kalah(boolean p1starts) {
         p1 = new AIPlayer1();
         p2 = new AIPlayer2();
         p1houses = new int[6];
         p2houses = new int[6];
+        
+        for(int i = 0;i < p1houses.length; i++){
+            p1houses[i] = 4;
+            p2houses[i] = 4;
+        }
+        
         p1store = 0;
         p2store = 0;
         p1sTurn = p1starts;
     }
-
+    
+    /**
+    The method called when you want to run a game
+    @return result The result of the game, 0 if a draw, 1 if p1 wins, 2 if p2 wins.
+    */
     public int run() {
         while(!isGameOver()) {
             // Equivalent to if(p1sTurn){current=p1;}else{current=p2;}
@@ -46,17 +63,31 @@ public class Kalah {
         }
     }
 
+    /**
+    Checks if the game is over
+    @return gameOver return TRUE if either all of p1's or p2's houses are empty, else returns false
+    */
     private boolean isGameOver() {
         return allEmpty(p1houses)
             || allEmpty(p2houses);
     }
 
+    /**
+    Moves the seeds (sows) to the correct places
+    @param index The index to take the seeds from
+    @return anotherTurn return TRUE if the player requires another turn, else returns FALSE if the turn should be switched
+    */
     private boolean sow(int index) {
         int numToSow = houses[index];
         // TODO
         return false;
     }
 
+    /**
+    Checks to see if all elements in an array are zero
+    @param houses The array the check
+    @return allEmpty returns TRUE if all elements in the array are zero, else returns FALSE if they are not all zero
+    */
     private boolean allEmpty(int[] houses) {
         for(int i = 0; i < houses.length; i++) {
             if(houses[i] != 0) {
@@ -66,6 +97,9 @@ public class Kalah {
         return true;
     }
 
+    /**
+    Decides which player has all the empty houses, then calls a method to move all the other players seeds
+    */
     private void moveAllSeedsToStores() {
         if(allEmpty(p1houses)) {
             moveAllSeedsToStores(p2houses, false);
@@ -76,6 +110,11 @@ public class Kalah {
         }
     }
 
+    /**
+    Moves all of a players seeds to their house
+    @param houses The array of houses to empty into a store
+    @param p1 TRUE if p1's houses need emptying, FALSE if p2's houses need emptying.
+    */
     private void moveAllSeedsToStores(int[] houses, boolean p1) {
         for(int i = 0; i < houses.length; i++) {
             // Get the number of seeds in the
@@ -91,6 +130,10 @@ public class Kalah {
         }
     }
 
+    /**
+    Creates an error message
+    @param message The message you want to return in the error stream
+    */ 
     private void error(String message) {
         System.err.println("Error: " + message);
     }
