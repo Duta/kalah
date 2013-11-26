@@ -1,9 +1,4 @@
-public class Player {
-    // TODO: Add fields
-
-    public Player() {
-        // TODO
-    }
-
-    // TODO: Add methods
+public abstract class Player {
+    public abstract int getSowIndex(int[] ownHouses, int[] otherHouses,
+            int ownStore, int otherStore);
 }
