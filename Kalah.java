@@ -94,7 +94,11 @@ public class Kalah {
     			if(ownHouses[i] == 0) {
 				    int oppositeIndex = NUM_HOUSES - i - 1;
 				    int num = otherHouses[oppositeIndex];
-				    (p1sTurn ? p1store : p2store) += num;
+                    if(p1sTurn) {
+                        p1store += num;
+                    } else {
+                        p2store += num;
+                    }
 				    otherHouses[oppositeIndex] = 0;
 			    } else {
     				ownHouses[i]++;
@@ -107,7 +111,11 @@ public class Kalah {
     		
     	//While loop
     	while(numToSow != 0) {
-		    (p1sTurn ? p1store : p2store)++;
+            if(p1sTurn) {
+                p1store++;
+            } else {
+                p2store++;
+            }
 		    numToSow--;
     		
 		    if(numToSow == 0) {
@@ -130,7 +138,11 @@ public class Kalah {
 				    if(ownHouses[i] == 0) {
     					int oppositeIndex = NUM_HOUSES - i - 1;
 					    int num = otherHouses[oppositeIndex];
-					    (p1sTurn ? p1store : p2store) += num;
+                        if(p1sTurn) {
+                            p1store += num;
+                        } else {
+                            p2store += num;
+                        }
 					    otherHouses[oppositeIndex] = 0;
 				    } else {
     					ownHouses[i]++;
