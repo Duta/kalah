@@ -80,81 +80,81 @@ public class Kalah {
      * @return anotherTurn return TRUE if the player requires another turn, else returns FALSE if the turn should be switched
      */
     private boolean sow(int index) {
-    	int[] ownHouses = p1sTurn ? p1houses : p2houses;
-    	int[] otherHouses = p1sTurn ? p2houses : p1houses;
+        int[] ownHouses = p1sTurn ? p1houses : p2houses;
+        int[] otherHouses = p1sTurn ? p2houses : p1houses;
     
-    	int numToSow = ownHouses[index];
-    	ownHouses[index] = 0;
-    	
-    	//For loop to add one up until end of p1 houses, if run out of seeds return false
-    	for(int i = index + 1; i < NUM_HOUSES; i++) {
-		    numToSow--;
-    		
-		    if(numToSow == 0) {
-    			if(ownHouses[i] == 0) {
-				    int oppositeIndex = NUM_HOUSES - i - 1;
-				    int num = otherHouses[oppositeIndex];
+        int numToSow = ownHouses[index];
+        ownHouses[index] = 0;
+        
+        //For loop to add one up until end of p1 houses, if run out of seeds return false
+        for(int i = index + 1; i < NUM_HOUSES; i++) {
+            numToSow--;
+            
+            if(numToSow == 0) {
+                if(ownHouses[i] == 0) {
+                    int oppositeIndex = NUM_HOUSES - i - 1;
+                    int num = otherHouses[oppositeIndex];
                     if(p1sTurn) {
                         p1store += num;
                     } else {
                         p2store += num;
                     }
-				    otherHouses[oppositeIndex] = 0;
-			    } else {
-    				ownHouses[i]++;
-			    }
-			    return false;
-		    } else {
-    			ownHouses[i]++;
-		    }
-	    }
-    		
-    	//While loop
-    	while(numToSow != 0) {
+                    otherHouses[oppositeIndex] = 0;
+                } else {
+                    ownHouses[i]++;
+                }
+                return false;
+            } else {
+                ownHouses[i]++;
+            }
+        }
+            
+        //While loop
+        while(numToSow != 0) {
             if(p1sTurn) {
                 p1store++;
             } else {
                 p2store++;
             }
-		    numToSow--;
-    		
-		    if(numToSow == 0) {
-    			return true;
-		    }
-    		
-		    for(int i = 0; i < NUM_HOUSES; i++) {
-    			otherHouses[i]++;
-			    numToSow--;
-    	
-			    if(numToSow == 0) {
-    				return false;
-			    }	
-		    }
-					    
-		    for(int i = 0; i < NUM_HOUSES; i++) {
-    			numToSow--;
-		    
-    			if(numToSow == 0) {
-				    if(ownHouses[i] == 0) {
-    					int oppositeIndex = NUM_HOUSES - i - 1;
-					    int num = otherHouses[oppositeIndex];
+            numToSow--;
+            
+            if(numToSow == 0) {
+                return true;
+            }
+            
+            for(int i = 0; i < NUM_HOUSES; i++) {
+                otherHouses[i]++;
+                numToSow--;
+        
+                if(numToSow == 0) {
+                    return false;
+                }    
+            }
+                        
+            for(int i = 0; i < NUM_HOUSES; i++) {
+                numToSow--;
+            
+                if(numToSow == 0) {
+                    if(ownHouses[i] == 0) {
+                        int oppositeIndex = NUM_HOUSES - i - 1;
+                        int num = otherHouses[oppositeIndex];
                         if(p1sTurn) {
                             p1store += num;
                         } else {
                             p2store += num;
                         }
-					    otherHouses[oppositeIndex] = 0;
-				    } else {
-    					ownHouses[i]++;
-				    }
-				    return false;
-			    } else {
-    				ownHouses[i]++;
-			    }
-		    }
-	    }
-    	
-    	throw new RuntimeException("Um, fix yo code.");
+                        otherHouses[oppositeIndex] = 0;
+                    } else {
+                        ownHouses[i]++;
+                    }
+                    return false;
+                } else {
+                    ownHouses[i]++;
+                }
+            }
+        }
+        
+        throw new RuntimeException("Um, fix yo code.");
     }
 
     /**
