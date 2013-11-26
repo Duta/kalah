@@ -1,9 +1,7 @@
 public class AIPlayer2 extends Player {
-    // TODO: Add fields
-
-    public AIPlayer2() {
-        // TODO
+    @Override
+    public int getSowIndex(int[] ownHouses, int[] otherHouses,
+            int ownStore, int otherStore) {
+        return -1;
     }
-
-    // TODO: Add methods
 }
