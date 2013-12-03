@@ -8,6 +8,11 @@ public class Kalah {
         P2 = new AIPlayer2();
     private boolean p1starts;
 
+    static {
+        P1.setOpponent(P2);
+        P2.setOpponent(P1);
+    }
+
     /**
      * Constructor to set up the initial game board with 4 seeds in each house and creates the AI players
      * @param p1starts TRUE if player 1 is to have to first move, FALSE if player 2 is to have the first move
