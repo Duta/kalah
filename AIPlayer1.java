@@ -3,7 +3,7 @@ public class AIPlayer1 extends Player {
 
     @Override
     public int getSowIndex(Board board, int lastMove) {
-        MoveInfo info = alphaBeta(board, 7);
+        MoveInfo info = alphaBeta(board, 6);
         return info.getMoveIndex();
     }
 
@@ -20,13 +20,14 @@ public class AIPlayer1 extends Player {
         if(maximizing) {
             int bestIndex = -1;
             for(int i = 0; i < NUM_HOUSES; i++) {
-                if(board.getSide(this).isHouseEmpty(i)) {
+                if(node.getSide(this).isHouseEmpty(i)) {
                     continue;
                 }
                 Board child = node.getBoardForMove(i);
-                double quality = alphaBeta(child, depth-1, alpha, beta, false);
-                if(quality > alpha) {
-                    alpha = quality;
+                boolean maxNext = node.getCurrentPlayer() == child.getCurrentPlayer();
+                MoveInfo info = alphaBeta(child, depth-1, alpha, beta, maxNext);
+                if(info.getMoveQuality() > alpha) {
+                    alpha = info.getMoveQuality();
                     bestIndex = i;
                 }
                 if(beta <= alpha) {
@@ -37,13 +38,14 @@ public class AIPlayer1 extends Player {
         } else {
             int bestIndex = -1;
             for(int i = 0; i < NUM_HOUSES; i++) {
-                if(board.getSide(other).isHouseEmpty(i)) {
+                if(node.getSide(other).isHouseEmpty(i)) {
                     continue;
                 }
                 Board child = node.getBoardForMove(i);
-                double quality = alphaBeta(child, depth-1, alpha, beta, true);
-                if(quality < beta) {
-                    beta = quality;
+                boolean maxNext = node.getCurrentPlayer() != child.getCurrentPlayer();
+                MoveInfo info = alphaBeta(child, depth-1, alpha, beta, maxNext);
+                if(info.getMoveQuality() < beta) {
+                    beta = info.getMoveQuality();
                     bestIndex = i;
                 }
                 if(beta <= alpha) {
@@ -55,7 +57,8 @@ public class AIPlayer1 extends Player {
     }
 
     private double heuristicValue(Board node) {
-        //
+        int storesDiff = node.getSide(this).getStore() - node.getSide(other).getStore();
+        return storesDiff;
     }
 
     private static class MoveInfo {
