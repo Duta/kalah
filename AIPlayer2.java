@@ -1,7 +1,8 @@
 public class AIPlayer2 extends Player {
+    private static final int NUM_HOUSES = Kalah.NUM_HOUSES;
+    
     @Override
-    public int getSowIndex(int[] ownHouses, int[] otherHouses,
-            int ownStore, int otherStore) {
+    public int getSowIndex(Board board, int lastMove) {
         return -1;
     }
 }
