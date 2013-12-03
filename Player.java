@@ -1,4 +1,3 @@
 public abstract class Player {
-    public abstract int getSowIndex(int[] ownHouses, int[] otherHouses,
-            int ownStore, int otherStore);
+    public abstract int getSowIndex(Board board, int lastMove);
 }
