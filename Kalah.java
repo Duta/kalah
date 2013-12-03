@@ -1,10 +1,11 @@
 /**
  * A class for a single game of Kalah
  */
-public class Kalah {
+public class Kalah {    
     public static final int NUM_HOUSES = 6;
-
-    private Player p1, p2;
+    private static final Player
+        P1 = new AIPlayer1(),
+        P2 = new AIPlayer2();
     private boolean p1starts;
 
     /**
@@ -12,13 +13,11 @@ public class Kalah {
      * @param p1starts TRUE if player 1 is to have to first move, FALSE if player 2 is to have the first move
      */
     public Kalah(boolean p1starts) {
-        p1 = new AIPlayer1();
-        p2 = new AIPlayer2();
         this.p1starts = p1starts;
     }
 
     public int run() {
-        Board board = new Board(p1, p2, p1starts);
+        Board board = new Board(P1, P2, p1starts);
         int lastIndex = -1;
         while(!board.isGameOver()) {
             Player current = board.getCurrentPlayer();
@@ -27,8 +26,8 @@ public class Kalah {
             lastIndex = index;
         }
         board.finalize();
-        int p1store = board.getStore(p1);
-        int p2store = board.getStore(p2);
+        int p1store = board.getSide(P1).getStore();
+        int p2store = board.getSide(P2).getStore();
         if(p1store > p2store) {
             // Player 1 won
             return 1;
