@@ -1,10 +1,6 @@
 public class AIPlayer1 extends Player {
     private static final int NUM_HOUSES = Kalah.NUM_HOUSES;
 
-    public AIPlayer1(Player other) {
-        super(other);
-    }
-
     @Override
     public int getSowIndex(Board board, int lastMove) {
         MoveInfo info = alphaBeta(board, 7);
