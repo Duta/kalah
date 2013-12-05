@@ -86,6 +86,89 @@ public class AIPlayer2 extends Player {
         return currentBoard == previousBoard;         
     }
     
+    /**
+     * A generic class for a move 
+    */
+    private class Move
+    {
+        private int value;
+        
+        public Move(int value)
+        {
+            this.value = value;
+        }
+        
+        public void setValue(int value)
+        {
+            this.value = value;
+        }
+        
+        public void incValue(int inc)
+        {
+            value += inc;
+        }
+        
+        public void decValue(int dec)
+        {
+            value -= dec;
+        }
+        
+        public int getValue(int vlaue)
+        {
+            return value;
+        }
+    }
     
+    private class steal extends Move
+    {
+        public steal()
+        {
+            super();
+        }
+        
+        public run()
+        {
+            
+        }
+    }
+    
+    private class finishOwnStore extends Move
+    {
+        public finishOwnStore()
+        {
+            super();
+        }
+        
+        public run()
+        {
+            
+        }
+    }
+    
+    private class noOpp extends Move
+    {
+        public noOpp()
+        {
+            super();
+        }
+        
+        public run()
+        {
+            
+        }
+    }
+    
+    private class minOpp extends Move
+    {
+        public minOpp()
+        {
+            super();
+        }
+        
+        public run()
+        {
+            
+        }
+    }
     
 }
