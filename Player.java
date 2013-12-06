@@ -6,4 +6,5 @@ public abstract class Player {
     }    
 
     public abstract int getSowIndex(Board board, int lastMove);
+    public abstract void gameFinished(int winner);
 }
