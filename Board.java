@@ -100,11 +100,11 @@ public class Board {
         throw new RuntimeException("Something's gone horribly, horribly wrong.");
     }
 
-    public int getStore(Player player) {
+    public Side getSide(Player player) {
         if(player == p1) {
-            return p1side.getStore();
+            return p1side;
         } else {
-            return p2side.getStore();
+            return p2side;
         }
     }
 
