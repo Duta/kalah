@@ -33,15 +33,19 @@ public class Kalah {
         board.finalize();
         int p1store = board.getSide(P1).getStore();
         int p2store = board.getSide(P2).getStore();
+        int winner;
         if(p1store > p2store) {
             // Player 1 won
-            return 1;
+            winner = 1;
         } else if(p2store > p1store) {
             // Player 2 won
-            return 2;
+            winner = 2;
         } else {
             // It was a draw
-            return 0;
+            winner = 0;
         }
+        P1.gameFinished(winner);
+        P2.gameFinished(winner);
+        return winner;
     }
 }
