@@ -14,8 +14,8 @@ public class Board {
     }
 
     private Board(Board board) {
-        this.p1side = board.p1side;
-        this.p2side = board.p2side;
+        this.p1side = new Side(board.p1side);
+        this.p2side = new Side(board.p2side);
         this.p1 = board.p1;
         this.p2 = board.p2;
         this.current = board.current;
@@ -135,6 +135,14 @@ public class Board {
                 houses[i] = INITIAL_SEEDS;
             }
             store = 0;
+        }
+
+        public Side(Side side) {
+            houses = new int[NUM_HOUSES];
+            for(int i = 0; i < NUM_HOUSES; i++) {
+                houses[i] = side.houses[i];
+            }
+            store = side.store;
         }
 
         public boolean hasAllHousesEmpty() {
