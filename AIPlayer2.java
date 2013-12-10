@@ -21,6 +21,7 @@ public class AIPlayer2 extends Player {
     @Override
     public int getSowIndex(Board board, int lastMove) 
     {
+        System.out.println("PLAYER 2 MOVE ");
         this.currentBoard = board;
         if(test(0))
         {
@@ -42,7 +43,7 @@ public class AIPlayer2 extends Player {
     //Tests whether a move can be carried out
     private boolean test(int move)
     {
-        //System.out.println("TESTING MOVE " + move);
+        System.out.println("TESTING MOVE " + move);
         if(run(move) == -1)
         {
             return false;
@@ -186,7 +187,15 @@ public class AIPlayer2 extends Player {
             return minIndex;
         }
         
-        return generator.nextInt(5);   
+        for(int i = 0; i < NUM_HOUSES; i++)
+        {
+            if(getHouseOwn(i) != 0)
+            {
+               return i; 
+            }
+        }
+        
+        return 1;
         
      }
 }
