@@ -1,14 +1,14 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-public class AIPlayer1 extends Player {
+public class AIPlayer2 extends Player {
     private static final int NUM_HOUSES = Kalah.NUM_HOUSES;
     
     private Board currentBoard;
     private Board previousBoard;
     private Random generator;
     
-    public AIPlayer1()
+    public AIPlayer2()
     {     
         generator = new Random();
     }
