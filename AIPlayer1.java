@@ -1,36 +1,62 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 public class AIPlayer1 extends Player {
-    private static final int NUM_HOUSES = Kalah.NUM_HOUSES;
+    private static final int
+        NUM_HOUSES = Kalah.NUM_HOUSES,
+        MINIMAX_DEPTH = 5,
+        MAX_NUM_RECENT_STATES = 500;
+    private static final double
+        MINIMAX_PCT = 1.0;
+
     private List<Board> winMoves;
     private List<Board> drawMoves;
     private List<Board> lossMoves;
     private List<Board> currMoves;
+    private Random rgen;
 
     public AIPlayer1() {
         winMoves  = new ArrayList<Board>();
         drawMoves = new ArrayList<Board>();
         lossMoves = new ArrayList<Board>();
         currMoves = new ArrayList<Board>();
+        rgen = new Random();
     }
 
     @Override
     public int getSowIndex(Board board, int lastMove) {
-        MoveInfo info = alphaBeta(board, 6);
-        System.out.println("The best player in the world is sowing from a house with " + board.getSide(this).getHouse(info.getMoveIndex()) + " seeds.");
-        return info.getMoveIndex();
+        currMoves.add(board);
+        if(rgen.nextDouble() <= MINIMAX_PCT) {
+            MoveInfo info = alphaBeta(board, MINIMAX_DEPTH);
+            return info.getMoveIndex();
+        } else {
+            int choice;
+            do {
+                choice = rgen.nextInt(NUM_HOUSES);
+            } while(board.getSide(this).isHouseEmpty(choice));
+            return choice;
+        }
     }
 
     @Override
     public void gameFinished(int winner) {
         if(winner == 1) {
             winMoves.addAll(currMoves);
+            trimList(winMoves, MAX_NUM_RECENT_STATES);
         } else if(winner == 2) {
             lossMoves.addAll(currMoves);
+            trimList(lossMoves, MAX_NUM_RECENT_STATES);
         } else {
             drawMoves.addAll(currMoves);
+            trimList(drawMoves, MAX_NUM_RECENT_STATES);
         }
         currMoves.clear();
+    }
+
+    private void trimList(List<Board> list, int size) {
+        while(list.size() > size) {
+            list.remove(0);
+        }
     }
 
     private MoveInfo alphaBeta(Board origin, int maxDepth) {
@@ -88,8 +114,10 @@ public class AIPlayer1 extends Player {
      * > 0 -> Win
      */
     private double heuristicValue(Board node) {
-        double heuristic = 0;
+        double heuristic = 0.0;
+        // Basic heuristic
         heuristic += 0.2*(node.getSide(this).getStore() - node.getSide(other).getStore());
+        // Factor in learning
         heuristic += 5.0*bestMatch(node, winMoves);
         heuristic -= 5.0*bestMatch(node, lossMoves);
         heuristic /= 1 + bestMatch(node, drawMoves);
@@ -122,7 +150,7 @@ public class AIPlayer1 extends Player {
         if(s1.getStore() != s2.getStore()) {
             diff++;
         }
-        return 1 - diff/14.0;
+        return 1 - diff/7.0;
     }
 
     private static class MoveInfo {
