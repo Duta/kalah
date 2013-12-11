@@ -23,14 +23,15 @@ public class AIPlayer2 extends Player {
     }
 
     //Here because we love Bertie
-    public void gameFinished(int i)
+    public void gameFinished(GameResult result)
     {
+         Winner winner = result.getWinner();
          int ownStoreCount = countMoveType(0);
          int stealCount = countMoveType(1);
          
          if(ownStoreCount < stealCount)
          {
-            if(i == 2)
+            if(winner == Winner.PLAYER_TWO)
             {
                stealChance += 5;
             }
@@ -43,7 +44,7 @@ public class AIPlayer2 extends Player {
          else if(ownStoreCount > stealCount)
          {
             
-            if(i == 2)
+            if(winner == Winner.PLAYER_TWO)
             {
                ownStoreChance += 5;
             }
@@ -52,9 +53,6 @@ public class AIPlayer2 extends Player {
                ownStoreChance = ownStoreChance + (getStoreOwn() - previousStore);   
             }
          }
-         
-         System.out.println("OWN STORE CHANCE " + ownStoreChance);
-         System.out.println("STEAL CHANCE " + stealChance);
          
          list.clear();
          
@@ -89,13 +87,11 @@ public class AIPlayer2 extends Player {
             if(test(0))
             {
                list.add(0);
-               System.out.println("RUNNING FINISH 1");
                return run(0);
             }
             else if(test(1))
             {
                list.add(0);
-               System.out.println("RUNNING STEAL ---------------------------------------------1");
                return run(1);
             }
             else
@@ -108,13 +104,11 @@ public class AIPlayer2 extends Player {
             if(test(1))
             {
                list.add(1);
-               System.out.println("RUNNING STEAL ------------------------------------------2");
                return run(1);
             }
             else if(test(0))
             {
                list.add(1);
-               System.out.println("RUNNING FINISH 2");
                return run(0);
             }
             else
@@ -129,7 +123,6 @@ public class AIPlayer2 extends Player {
     //Tests whether a move can be carried out
     private boolean test(int move)
     {
-        //System.out.println("TESTING MOVE " + move);
         if(run(move) == -1)
         {
             return false;
@@ -140,17 +133,10 @@ public class AIPlayer2 extends Player {
         }
     }
     
-    //Creates a test string for finding out which move is being used
-    private String moveString(int move)
-    {
-        return "Running Move " + move;
-    }
-    
     //Checks the increase we give to an opponent from sowing from i
     public int increase(int i)
     {              
         int increase = getHouseOwn(i) - (NUM_HOUSES - i);
-        //System.out.println("NUMBER IN HOUSE IS " + currentBoard.getSide(this).getHouse(i));
         
         if(increase >= 0)
         {
@@ -212,7 +198,6 @@ public class AIPlayer2 extends Player {
             {
                 if(willFinishInStore(i))
                 {
-                    //System.out.println("SOWING FROM " + i);
                     return i;
                 }
             }
@@ -257,7 +242,6 @@ public class AIPlayer2 extends Player {
         //MINOPP
         else if(index == 2)
         {
-            //System.out.println("RUNNING MINOPP");
                 
             int min = 49;
             int minIndex = 0;
@@ -265,16 +249,13 @@ public class AIPlayer2 extends Player {
             for(int i = 0; i < NUM_HOUSES; i++)
             {
                 int increase = increase(i);
-                //System.out.println("INCREASE IS " + increase);
                 
                 if((increase >= 0) && (increase < min) && checkHouseNotEmpty(i))
                 {
                     min = increase;
-                    //System.out.println("MIN IS " + min);
                     minIndex = i;
                 }
             }
-            //System.out.println("SOWING FROM " + minIndex);
             return minIndex;
         }
         
