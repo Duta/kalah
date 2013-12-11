@@ -17,8 +17,8 @@ public class AIPlayer2 extends Player {
     public AIPlayer2()
     {   
         previousStore = 0;  
-        ownStoreChance = 50;
-        stealChance = 50;
+        ownStoreChance = 150;
+        stealChance = 150;
         generator = new Random();
     }
 
@@ -31,9 +31,9 @@ public class AIPlayer2 extends Player {
          if(ownStoreCount < stealCount)
          {
             if(i == 2)
-               {
-                  stealChance += 5;
-               }
+            {
+               stealChance += 5;
+            }
             if(getStoreOwn() > previousStore)
             {
                stealChance = stealChance + (getStoreOwn() - previousStore);
@@ -42,14 +42,14 @@ public class AIPlayer2 extends Player {
          }
          else if(ownStoreCount > stealCount)
          {
+            
             if(i == 2)
-               {
-                  ownStoreChance += 5;
-               }
+            {
+               ownStoreChance += 5;
+            }
             if(getStoreOwn() > previousStore)
             {
-               ownStoreChance = ownStoreChance + (getStoreOwn() - previousStore);
-               
+               ownStoreChance = ownStoreChance + (getStoreOwn() - previousStore);   
             }
          }
          
