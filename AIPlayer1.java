@@ -4,7 +4,7 @@ import java.util.Random;
 public class AIPlayer1 extends Player {
     private static final int
         NUM_HOUSES = Kalah.NUM_HOUSES,
-        MINIMAX_DEPTH = 5,
+        MINIMAX_DEPTH = 3,
         MAX_NUM_RECENT_STATES = 500;
     private static final double
         MINIMAX_PCT = 1.0;
@@ -129,7 +129,7 @@ public class AIPlayer1 extends Player {
         for(int i = 0; i < matches.size(); i++) {
             double match = compareBoards(board, matches.get(i));
             if(match > bestMatch) {
-                bestMatch = match;   
+                bestMatch = match;
             }
         }
         return bestMatch;
