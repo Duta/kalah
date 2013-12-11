@@ -37,6 +37,11 @@ public class AIPlayer2 extends Player {
                {
                   stealChance += 5;
                }
+               if(i == 1)
+               {
+                  stealChance -= 5;
+               }
+               
             }
             
          }
@@ -49,6 +54,10 @@ public class AIPlayer2 extends Player {
                {
                   ownStoreChance += 5;
                }
+               if(i == 1)
+               {
+                  ownStoreChance -= 5;
+               }
             }
          }
          
@@ -57,7 +66,10 @@ public class AIPlayer2 extends Player {
          
          list.clear();
          
-         int previousStore = getStoreOwn();
+         if(getStoreOwn() > previousStore)
+         {
+            previousStore = getStoreOwn();
+         }
     }
     
     private int countMoveType(int i)
