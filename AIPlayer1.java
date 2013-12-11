@@ -39,17 +39,21 @@ public class AIPlayer1 extends Player {
     }
 
     @Override
-    public void gameFinished(int winner) {
-        if(winner == 1) {
-            winMoves.addAll(currMoves);
-            trimList(winMoves, MAX_NUM_RECENT_STATES);
-        } else if(winner == 2) {
-            lossMoves.addAll(currMoves);
-            trimList(lossMoves, MAX_NUM_RECENT_STATES);
-        } else {
-            drawMoves.addAll(currMoves);
-            trimList(drawMoves, MAX_NUM_RECENT_STATES);
+    public void gameFinished(GameResult result) {
+        List<Board> list;
+        switch(result.getWinner()) {
+        case PLAYER_ONE:
+            list = winMoves;
+            break;
+        case PLAYER_TWO:
+            list = lossMoves;
+            break;
+        default:
+            list = drawMoves;
+            break;
         }
+        list.addAll(currMoves);
+        trimList(list, MAX_NUM_RECENT_STATES);
         currMoves.clear();
     }
 
