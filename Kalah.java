@@ -21,7 +21,7 @@ public class Kalah {
         this.p1starts = p1starts;
     }
 
-    public int run() {
+    public GameResult run() {
         Board board = new Board(P1, P2, p1starts);
         int lastIndex = -1;
         while(!board.isGameOver()) {
@@ -33,19 +33,20 @@ public class Kalah {
         board.finalize();
         int p1store = board.getSide(P1).getStore();
         int p2store = board.getSide(P2).getStore();
-        int winner;
+        Winner winner;
         if(p1store > p2store) {
             // Player 1 won
-            winner = 1;
+            winner = Winner.PLAYER_ONE;
         } else if(p2store > p1store) {
             // Player 2 won
-            winner = 2;
+            winner = Winner.PLAYER_TWO;
         } else {
             // It was a draw
-            winner = 0;
+            winner = Winner.NONE;
         }
-        P1.gameFinished(winner);
-        P2.gameFinished(winner);
-        return winner;
+        GameResult result = new GameResult(winner, p1store, p2store);
+        P1.gameFinished(result);
+        P2.gameFinished(result);
+        return result;
     }
 }
