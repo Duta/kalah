@@ -30,34 +30,26 @@ public class AIPlayer2 extends Player {
          
          if(ownStoreCount < stealCount)
          {
-            if(getStoreOwn() > previousStore)
-            {
-               stealChance = stealChance + (getStoreOwn() - previousStore);
-               if(i == 2)
+            if(i == 2)
                {
                   stealChance += 5;
                }
-               if(i == 1)
-               {
-                  stealChance -= 5;
-               }
-               
+            if(getStoreOwn() > previousStore)
+            {
+               stealChance = stealChance + (getStoreOwn() - previousStore);
             }
             
          }
          else if(ownStoreCount > stealCount)
          {
-            if(getStoreOwn() > previousStore)
-            {
-               ownStoreChance = ownStoreChance + (getStoreOwn() - previousStore);
-               if(i == 2)
+            if(i == 2)
                {
                   ownStoreChance += 5;
                }
-               if(i == 1)
-               {
-                  ownStoreChance -= 5;
-               }
+            if(getStoreOwn() > previousStore)
+            {
+               ownStoreChance = ownStoreChance + (getStoreOwn() - previousStore);
+               
             }
          }
          
