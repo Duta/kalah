@@ -8,42 +8,124 @@ public class AIPlayer2 extends Player {
     private Board previousBoard;
     private Random generator;
     
+    private int ownStoreChance;
+    private int stealChance;
+    private int previousStore;
+    
+    private ArrayList<Integer> list = new ArrayList<Integer>();
+    
     public AIPlayer2()
-    {     
+    {   
+        previousStore = 0;  
+        ownStoreChance = 50;
+        stealChance = 50;
         generator = new Random();
     }
 
     //Here because fuck Bertie
     public void gameFinished(int i)
     {
+         int ownStoreCount = countMoveType(0);
+         int stealCount = countMoveType(1);
+         
+         if(ownStoreCount < stealCount)
+         {
+            if(getStoreOwn() > previousStore)
+            {
+               stealChance = stealChance + (getStoreOwn() - previousStore);
+               if(i == 2)
+               {
+                  stealChance += 5;
+               }
+            }
+            
+         }
+         else if(ownStoreCount > stealCount)
+         {
+            if(getStoreOwn() > previousStore)
+            {
+               ownStoreChance = ownStoreChance + (getStoreOwn() - previousStore);
+               if(i == 2)
+               {
+                  ownStoreChance += 5;
+               }
+            }
+         }
+         
+         System.out.println("OWN STORE CHANCE " + ownStoreChance);
+         System.out.println("STEAL CHANCE " + stealChance);
+         
+         list.clear();
+         
+         int previousStore = getStoreOwn();
+    }
+    
+    private int countMoveType(int i)
+    {
+      int total = 0;
+      for(int j = 0; j < list.size(); j++)
+      {
+         if(list.get(j) == i)
+         {
+            total++;
+         }
+      }
+      return total;
     }
 
     @Override
     public int getSowIndex(Board board, int lastMove) 
     {
-        System.out.println("PLAYER 2 MOVE ");
+        
         this.currentBoard = board;
-        if(test(0))
+        int random = generator.nextInt(ownStoreChance + stealChance);
+        
+        if(random < ownStoreChance)
         {
-            System.out.println(moveString(0));
-            return run(0);    
-        }
-        else if(test(1))
-        {
-            System.out.println(moveString(1));
-            return run(1);
+            if(test(0))
+            {
+               list.add(0);
+               System.out.println("RUNNING FINISH 1");
+               return run(0);
+            }
+            else if(test(1))
+            {
+               list.add(0);
+               System.out.println("RUNNING STEAL ---------------------------------------------1");
+               return run(1);
+            }
+            else
+            {
+               return run(2);
+            }
         }
         else
         {
-            System.out.println(moveString(2));
-            return run(2);
+            if(test(1))
+            {
+               list.add(1);
+               System.out.println("RUNNING STEAL ------------------------------------------2");
+               return run(1);
+            }
+            else if(test(0))
+            {
+               list.add(1);
+               System.out.println("RUNNING FINISH 2");
+               return run(0);
+            }
+            else
+            {
+               return run(2);
+            }
         }
+        
     }
+   
     
     //Tests whether a move can be carried out
     private boolean test(int move)
     {
-        System.out.println("TESTING MOVE " + move);
+        //System.out.println("TESTING MOVE " + move);
         if(run(move) == -1)
         {
             return false;
@@ -95,6 +177,11 @@ public class AIPlayer2 extends Player {
         return currentBoard.getSide(this).getHouse(i);
     }
     
+    private int getStoreOwn()
+    {
+      return currentBoard.getSide(this).getStore();
+    }
+    
     //works out if a move will finish in our own store
     private boolean willFinishInStore(int i)
     {   
@@ -115,7 +202,7 @@ public class AIPlayer2 extends Player {
     public int run(int index)
     {
         //FINISH IN STORE
-        if(index == 1)
+        if(index == 0)
         {
             for(int i = 0; i < NUM_HOUSES; i++)
             {
@@ -130,7 +217,7 @@ public class AIPlayer2 extends Player {
         }
         
         //STEAL
-        else if(index == 0)
+        else if(index == 1)
         {
             //Check if we have empty store or a store with 13, if no the return -1
             for(int i = 0; i < NUM_HOUSES; i++)
