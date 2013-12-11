@@ -22,7 +22,7 @@ public class AIPlayer2 extends Player {
         generator = new Random();
     }
 
-    //Here because fuck Bertie
+    //Here because we love Bertie
     public void gameFinished(int i)
     {
          int ownStoreCount = countMoveType(0);
